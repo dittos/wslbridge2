@@ -6,7 +6,7 @@
 
 #include <windows.h>
 #include <assert.h>
-#include <sys/cygwin.h>
+// #include <sys/cygwin.h>
 
 #include <array>
 #include <algorithm>
@@ -171,33 +171,33 @@ std::wstring normalizePath(const std::wstring &path)
     return npath;
 }
 
-std::wstring findBackendProgram(const std::string &customBackendPath, const wchar_t *const backendName)
-{
-    std::wstring ret;
-    if (!customBackendPath.empty())
-    {
-        char *winPath = static_cast<char*>(
-            cygwin_create_path(CCP_POSIX_TO_WIN_A, customBackendPath.c_str()));
-        if (winPath == nullptr)
-            fatalPerror(("error: bad path: '" + customBackendPath + "'").c_str());
+// std::wstring findBackendProgram(const std::string &customBackendPath, const wchar_t *const backendName)
+// {
+//     std::wstring ret;
+//     if (!customBackendPath.empty())
+//     {
+//         char *winPath = static_cast<char*>(
+//             cygwin_create_path(CCP_POSIX_TO_WIN_A, customBackendPath.c_str()));
+//         if (winPath == nullptr)
+//             fatalPerror(("error: bad path: '" + customBackendPath + "'").c_str());
 
-        ret = mbsToWcs(winPath);
-        free(winPath);
-    }
-    else
-    {
-        std::wstring progDir = dirname(getModuleFileName());
-        ret = progDir + L"\\" + backendName;
-    }
+//         ret = mbsToWcs(winPath);
+//         free(winPath);
+//     }
+//     else
+//     {
+//         std::wstring progDir = dirname(getModuleFileName());
+//         ret = progDir + L"\\" + backendName;
+//     }
 
-    if (!pathExists(ret))
-    {
-        fatal("error: '%s' backend program is missing\n",
-              wcsToMbs(ret).c_str());
-    }
+//     if (!pathExists(ret))
+//     {
+//         fatal("error: '%s' backend program is missing\n",
+//               wcsToMbs(ret).c_str());
+//     }
 
-    return ret;
-}
+//     return ret;
+// }
 
 void appendWslArg(std::wstring &out, const std::wstring &arg)
 {
