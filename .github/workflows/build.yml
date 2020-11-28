@@ -1,0 +1,22 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: msys2/setup-msys2@v2
+      
+      - shell: msys2 {0}
+        run: |
+          cd src
+          make -f Makefile.frontend RELEASE=1
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: 'get-vm-id.exe'
+          path: bin/wslbridge2.exe
